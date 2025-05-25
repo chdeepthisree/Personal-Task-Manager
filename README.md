@@ -8,4 +8,7 @@ To start the app use this command
 
 python manage.py startapp App_name
 
+To run the programm:
+python manage.py runserver
+
 The HTML code renders a page to display a list of categories.
