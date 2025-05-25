@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>My Tasks</h2>
+
+<!-- Add Task button -->
+<a href="{% url 'task_create' %}" style="padding: 5px 10px; background-color: #28a745; color: white; text-decoration: none; border-radius: 4px;">
+  Add Task
+</a>
+
+<!-- Task list -->
+<ul style="list-style: none; padding: 0; margin-top: 15px;">
+  {% for task in tasks %}
+    <li style="
+      margin: 10px 0;
+      padding: 10px;
+      background-color: {% if task.completed %}#d4edda{% else %}#f8d7da{% endif %};
+      border-left: 5px solid {% if task.completed %}green{% else %}red{% endif %};
+      border: 1px solid #ccc;
+    ">
+      <div>
+        <strong style="{% if task.completed %}text-decoration: line-through; color: gray;{% endif %}">
+          {{ task.title }}
+        </strong>
+        <span style="font-size: 12px; margin-left: 10px; color: {% if task.completed %}green{% else %}red{% endif %};">
+          {% if task.completed %}✔ Completed{% else %}⏳ Pending{% endif %}
+        </span>
+      </div>
+      <div>
+        <a href="{% url 'task_update' task.pk %}" style="margin-right: 10px; color: #007bff;">Edit</a>
+        <a href="{% url 'task_delete' task.pk %}" style="color: #dc3545;">Delete</a>
+      </div>
+    </li>
+  {% empty %}
+    <li>No tasks found.</li>
+  {% endfor %}
+</ul>
+{% endblock %}
+
+
