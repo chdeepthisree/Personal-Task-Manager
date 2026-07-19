@@ -18,6 +18,7 @@ class Task(models.Model):
         choices=PRIORITY_CHOICES,
         default='MEDIUM'
     )
+    due_date = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return self.title

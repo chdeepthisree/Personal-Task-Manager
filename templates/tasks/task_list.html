@@ -37,6 +37,16 @@
   {% else %}
       🟢 {{ task.get_priority_display }}
   {% endif %}
+  <br>
+
+<strong>Due Date:</strong>
+
+{% if task.due_date %}
+    📅 {{ task.due_date }}
+{% else %}
+    No Due Date
+{% endif %}
+
 </div>
       <div>
         <a href="{% url 'task_update' task.pk %}" style="margin-right: 10px; color: #007bff;">Edit</a>
