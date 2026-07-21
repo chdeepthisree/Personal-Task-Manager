@@ -1,10 +1,27 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>My Tasks - TESTING </h2>
+
+<h2>My Tasks</h2>
+
+<!-- Search Form -->
+<form method="GET" style="margin-bottom: 15px;">
+    <input
+    type="text"
+    name="q"
+    placeholder="Search by title or description..."
+    value="{{ query|default_if_none:'' }}"
+    style="padding:8px; width:300px;">
+
+    <button type="submit">Search</button>
+
+    <a href="{% url 'task_list' %}" style="margin-left:10px;">
+        Clear
+    </a>
+</form>
 
 <!-- Add Task button -->
 <a href="{% url 'task_create' %}" style="padding: 5px 10px; background-color: #28a745; color: white; text-decoration: none; border-radius: 4px;">
-  Add Task
+    Add Task
 </a>
 
 <!-- Task list -->
@@ -17,46 +34,57 @@
       border-left: 5px solid {% if task.completed %}green{% else %}red{% endif %};
       border: 1px solid #ccc;
     ">
-     <div>
-  <strong style="{% if task.completed %}text-decoration: line-through; color: gray;{% endif %}">
-    {{ task.title }}
-  </strong>
 
-  <span style="font-size: 12px; margin-left: 10px; color: {% if task.completed %}green{% else %}red{% endif %};">
-    {% if task.completed %}✔ Completed{% else %}⏳ Pending{% endif %}
-  </span>
-
-  <br>
-
-  <strong>Priority:</strong>
-
-  {% if task.priority == 'HIGH' %}
-      🔴 {{ task.get_priority_display }}
-  {% elif task.priority == 'MEDIUM' %}
-      🟡 {{ task.get_priority_display }}
-  {% else %}
-      🟢 {{ task.get_priority_display }}
-  {% endif %}
-  <br>
-
-<strong>Due Date:</strong>
-
-{% if task.due_date %}
-    📅 {{ task.due_date }}
-{% else %}
-    No Due Date
-{% endif %}
-
-</div>
       <div>
+
+        <strong style="{% if task.completed %}text-decoration: line-through; color: gray;{% endif %}">
+          {{ task.title }}
+        </strong>
+
+        <span style="font-size: 12px; margin-left: 10px; color: {% if task.completed %}green{% else %}red{% endif %};">
+          {% if task.completed %}
+            ✔ Completed
+          {% else %}
+            ⏳ Pending
+          {% endif %}
+        </span>
+
+        <br>
+
+        <strong>Priority:</strong>
+
+        {% if task.priority == 'HIGH' %}
+            🔴 {{ task.get_priority_display }}
+        {% elif task.priority == 'MEDIUM' %}
+            🟡 {{ task.get_priority_display }}
+        {% else %}
+            🟢 {{ task.get_priority_display }}
+        {% endif %}
+
+        <br>
+
+        <strong>Due Date:</strong>
+
+        {% if task.due_date %}
+            📅 {{ task.due_date }}
+        {% else %}
+            No Due Date
+        {% endif %}
+
+      </div>
+
+      <div style="margin-top:10px;">
         <a href="{% url 'task_update' task.pk %}" style="margin-right: 10px; color: #007bff;">Edit</a>
         <a href="{% url 'task_delete' task.pk %}" style="color: #dc3545;">Delete</a>
       </div>
+
     </li>
+
   {% empty %}
     <li>No tasks found.</li>
   {% endfor %}
 </ul>
+
 {% endblock %}
 
 
